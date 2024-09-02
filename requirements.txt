@@ -1,0 +1,8 @@
+pytest==8.3.2
+selene>=2.0.0rc9
+requests == 2.32.3
+allure-pytest==2.13.5
+pip~=24.2
+attrs~=23.2.0
+PySocks~=1.7.1
+allure-python-commons~=2.13.5
