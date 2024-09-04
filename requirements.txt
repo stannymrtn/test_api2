@@ -6,3 +6,4 @@ pip~=24.2
 attrs~=23.2.0
 PySocks~=1.7.1
 allure-python-commons~=2.13.5
+python-dotenv==1.0.1

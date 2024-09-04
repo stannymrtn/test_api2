@@ -1,12 +1,11 @@
+import os
+
 import allure
 import pytest
 from selene import browser
 import requests
 from allure_commons.types import AttachmentType
-
-EMAIL = 'Stanmr7n@gmail.com'
-PASSWORD = 'k3K9uQV$z#jGj'
-URL = 'https://demowebshop.tricentis.com'
+from utils.data import EMAIL, PASSWORD, URL
 
 
 def auth_with_api():

@@ -41,3 +41,22 @@ def test_add_product():
 
     with allure.step('Чистим корзину'):
         clear_cart()
+
+
+def test_add_one_more_products():
+    with allure.step('API-авторизация'):
+        cookie = auth_with_api()
+
+    with allure.step('Открываем страницу'):
+        browser.open('/')
+        browser.driver.add_cookie({"name": "NOPCOMMERCE.AUTH", "value": cookie})
+        browser.open('/')
+
+    with allure.step('Добавляем несколько товаров в корзину'):
+        response_code1 = add_product_to_cart(product_url='/addproducttocart/catalog/40/1/1', cookie=cookie)
+        assert response_code1 == 200
+        response_code2 = add_product_to_cart(product_url='/addproducttocart/catalog/75/1/1', cookie=cookie)
+        assert response_code2 == 200
+
+    with allure.step('Чистим корзину'):
+        clear_cart()
