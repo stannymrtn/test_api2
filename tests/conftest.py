@@ -1,11 +1,20 @@
 import os
-
 import allure
 import pytest
 from selene import browser
 import requests
 from allure_commons.types import AttachmentType
-from utils.data import EMAIL, PASSWORD, URL
+from dotenv import load_dotenv
+
+
+@pytest.fixture(scope='session', autouse=True)
+def load_env():
+    load_dotenv()
+
+
+EMAIL = os.getenv('EMAIL')
+PASSWORD = os.getenv('PASSWORD')
+URL = "https://demowebshop.tricentis.com"
 
 
 def auth_with_api():
@@ -14,11 +23,10 @@ def auth_with_api():
         data={'Email': EMAIL, 'Password': PASSWORD},
         allow_redirects=False
     )
-    cookie = response_auth.cookies.get("NOPCOMMERCE.AUTH")
-    allure.attach(body=response_auth.text, name='Response', attachment_type=AttachmentType.TEXT, extension='.txt')
-    allure.attach(body=cookie, name='Cookie', attachment_type=AttachmentType.TEXT, extension='.txt')
 
-    return cookie
+    allure.attach(body=response_auth.text, name='Response', attachment_type=AttachmentType.TEXT, extension='.txt')
+    allure.attach(body=str(response_auth.headers), name='Response Headers', attachment_type=AttachmentType.TEXT,
+                  extension='.txt')
 
 
 @pytest.fixture(autouse=True)
