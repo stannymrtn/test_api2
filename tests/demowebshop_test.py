@@ -59,4 +59,5 @@ def test_add_one_more_products():
         assert response_code2 == 200
 
     with allure.step('Чистим корзину'):
+        browser.open('/cart')
         clear_cart()

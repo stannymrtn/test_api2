@@ -11,13 +11,12 @@ from dotenv import load_dotenv
 def load_env():
     load_dotenv()
 
-
-EMAIL = os.getenv('EMAIL')
-PASSWORD = os.getenv('PASSWORD')
 URL = "https://demowebshop.tricentis.com"
 
-
 def auth_with_api():
+    EMAIL = os.getenv('EMAIL')
+    PASSWORD = os.getenv('PASSWORD')
+
     response_auth = requests.post(
         url=URL + '/login',
         data={'Email': EMAIL, 'Password': PASSWORD},
@@ -27,10 +26,12 @@ def auth_with_api():
     allure.attach(body=response_auth.text, name='Response', attachment_type=AttachmentType.TEXT, extension='.txt')
     allure.attach(body=str(response_auth.headers), name='Response Headers', attachment_type=AttachmentType.TEXT,
                   extension='.txt')
+    return response_auth.cookies.get('NOPCOMMERCE.AUTH')
 
 
 @pytest.fixture(autouse=True)
 def browser_management():
+    auth_with_api()
     browser.config.base_url = URL
     browser.config.window_height = 1080
     browser.config.window_width = 1920
